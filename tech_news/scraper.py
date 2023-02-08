@@ -3,6 +3,7 @@ import requests
 from requests.exceptions import ConnectTimeout, HTTPError
 from ratelimit import limits, sleep_and_retry
 from parsel import Selector
+import re
 
 config = {
     "requests": {
@@ -16,6 +17,15 @@ config = {
     "selectors": {
         "updates": "h2.entry-title a::attr(href)",
         "next_page_link": "a.next.page-numbers::attr(href)",
+        "news": {
+            "url": "div::attr(data-share-url)",
+            "title": "h1.entry-title::text",
+            "timestamp": "li.meta-date::text",
+            "writer": "a.url.fn::text",
+            "reading_time": "li.meta-reading-time::text",
+            "summary": "string(//div[has-class('entry-content')]//p[1])",
+            "category": "a.category-style > span.label::text",
+        },
     },
 }
 
@@ -55,7 +65,32 @@ def scrape_next_page_link(html_content):
 
 # Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
+    selector = Selector(text=html_content)
+
+    return {
+        "url": selector.css(config["selectors"]["news"]["url"]).get(),
+        "title": selector.css(config["selectors"]["news"]["title"])
+        .get()
+        .strip(),
+        "timestamp": selector.css(
+            config["selectors"]["news"]["timestamp"]
+        ).get(),
+        "writer": selector.css(config["selectors"]["news"]["writer"]).get(),
+        "reading_time": int(
+            re.search(
+                r"\d+",
+                selector.css(
+                    config["selectors"]["news"]["reading_time"]
+                ).get(),
+            ).group()
+        ),
+        "summary": selector.xpath(config["selectors"]["news"]["summary"])
+        .get()
+        .strip(),
+        "category": selector.css(
+            config["selectors"]["news"]["category"]
+        ).get(),
+    }
 
 
 # Requisito 5
