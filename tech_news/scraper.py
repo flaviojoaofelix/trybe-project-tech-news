@@ -13,7 +13,10 @@ config = {
             "period": 1,
         },
     },
-    "selectors": {"updates": "h2.entry-title a::attr(href)"},
+    "selectors": {
+        "updates": "h2.entry-title a::attr(href)",
+        "next_page_link": "a.next.page-numbers::attr(href)",
+    },
 }
 
 
@@ -38,7 +41,6 @@ def fetch(url: str) -> str:
 
 # Requisito 2
 def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
     selector = Selector(text=html_content)
 
     return selector.css(config["selectors"]["updates"]).getall()
@@ -46,7 +48,9 @@ def scrape_updates(html_content):
 
 # Requisito 3
 def scrape_next_page_link(html_content):
-    """Seu código deve vir aqui"""
+    selector = Selector(text=html_content)
+
+    return selector.css(config["selectors"]["next_page_link"]).get()
 
 
 # Requisito 4
