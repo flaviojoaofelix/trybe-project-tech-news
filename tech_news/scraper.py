@@ -2,6 +2,7 @@
 import requests
 from requests.exceptions import ConnectTimeout, HTTPError
 from ratelimit import limits, sleep_and_retry
+from parsel import Selector
 
 config = {
     "requests": {
@@ -22,7 +23,11 @@ config = {
 )
 def fetch(url: str) -> str:
     try:
-        response = requests.get(url, timeout=config["requests"]["timeout"])
+        response = requests.get(
+            url,
+            headers=config["requests"]["headers"],
+            timeout=config["requests"]["timeout"],
+        )
         response.raise_for_status()
     except (ConnectTimeout, HTTPError, requests.ReadTimeout):
         return None
