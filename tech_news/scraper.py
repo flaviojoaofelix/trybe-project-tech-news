@@ -1,6 +1,33 @@
 # Requisito 1
-def fetch(url):
-    """Seu código deve vir aqui"""
+import requests
+from requests.exceptions import ConnectTimeout, HTTPError
+from ratelimit import limits, sleep_and_retry
+
+config = {
+    "requests": {
+        "headers": {"user-agent": "Fake user-agent"},
+        "timeout": 3,
+        "rate_limit": {
+            "calls": 1,
+            "period": 1,
+        },
+    },
+}
+
+
+@sleep_and_retry
+@limits(
+    calls=config["requests"]["rate_limit"]["calls"],
+    period=config["requests"]["rate_limit"]["calls"],
+)
+def fetch(url: str) -> str:
+    try:
+        response = requests.get(url, timeout=config["requests"]["timeout"])
+        response.raise_for_status()
+    except (ConnectTimeout, HTTPError, requests.ReadTimeout):
+        return None
+
+    return response.text
 
 
 # Requisito 2
