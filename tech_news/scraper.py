@@ -13,6 +13,7 @@ config = {
             "period": 1,
         },
     },
+    "selectors": {"updates": "h2.entry-title a::attr(href)"},
 }
 
 
@@ -38,6 +39,9 @@ def fetch(url: str) -> str:
 # Requisito 2
 def scrape_updates(html_content):
     """Seu código deve vir aqui"""
+    selector = Selector(text=html_content)
+
+    return selector.css(config["selectors"]["updates"]).getall()
 
 
 # Requisito 3
