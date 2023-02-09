@@ -1,12 +1,17 @@
 # Requisito 1
 import requests
 from requests.exceptions import ConnectTimeout, HTTPError
-from ratelimit import limits, sleep_and_retry
 from parsel import Selector
+
+from ratelimit import limits, sleep_and_retry
 import re
+
+from tech_news.database import create_news
+
 
 config = {
     "requests": {
+        "base_url": "https://blog.betrybe.com",
         "headers": {"user-agent": "Fake user-agent"},
         "timeout": 3,
         "rate_limit": {
@@ -95,4 +100,15 @@ def scrape_news(html_content):
 
 # Requisito 5
 def get_tech_news(amount):
-    """Seu código deve vir aqui"""
+    page_html = fetch(config["requests"]["base_url"])
+    news_url = scrape_updates(page_html)
+
+    while len(news_url) < amount:
+        next_page_link = scrape_next_page_link(page_html)
+        page_html = fetch(next_page_link)
+        news_url += scrape_updates(page_html)
+
+    news_data = [scrape_news(fetch(url)) for url in news_url[:amount]]
+
+    create_news(news_data)
+    return news_data
