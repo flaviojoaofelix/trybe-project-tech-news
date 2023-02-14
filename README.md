@@ -38,6 +38,10 @@ Neste projeto desenvolvido em **Python**, foi criado uma aplicação com o intui
 
 - Para armazenamento dos dados.
 
+### 7. **Docker**[^8]
+
+- Para criar uma máquina virtual com o Banco de Dados MongoDB
+
 ## Como Utilizar
 
 ### Configurar Localmente
@@ -704,3 +708,5 @@ local: `tech_news/menu.py`
 [^6]: [Pytest Framework](https://docs.pytest.org/en/7.2.x/)
 
 [^7]: [Banco de Dados MongoDB](https://www.mongodb.com/)
+
+[^8]: [Docker](https://www.docker.com)
