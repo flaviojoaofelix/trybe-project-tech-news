@@ -40,22 +40,11 @@ Neste projeto desenvolvido em **Python**, foi criado uma aplicação com o intui
 
 ## Como Utilizar
 
-### Rodando
-
-Para conseguir utilizar a aplicação, você pode acessa-la diretamente pelo seguinte endereço:
-
-[https://flaviojoaofelix.github.io/trybe-project-recipes-app/](https://flaviojoaofelix.github.io/trybe-project-recipes-app/)
-
-ou
-
-[https://flaviojoaofelix.dev/trybe-project-recipes-app/](https://flaviojoaofelix.dev/trybe-project-recipes-app/)
-
 ### Configurar Localmente
 
 #### Requisitos
 
-- [NodeJS](https://nodejs.org) (v16.x)
-- [NPM](https://www.npmjs.com/)
+- [Python](https://nodejs.org) (v3.x)
 
 #### Passos para Instalação/Configuração
 
