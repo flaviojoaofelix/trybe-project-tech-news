@@ -44,7 +44,8 @@ Neste projeto desenvolvido em **Python**, foi criado uma aplicação com o intui
 
 #### Requisitos
 
-- [Python](https://nodejs.org) (v3.x)
+- [Python](https://www.python.org/) (v3.x)
+- [Docker](https://www.docker.com/)
 
 #### Passos para Instalação/Configuração
 
